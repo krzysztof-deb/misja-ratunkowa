@@ -60,11 +60,26 @@ Map *load_map(const char *filename) {
   return m;
 }
 void free_map(Map *map) {
-  for (int i = 0; i < map->height; i++) {
-    free(map->val[i]);
-  }
-  free(map->val);
-  free(map);
-  return;
+  if (map != NULL) {
+    for (int i = 0; i < map->height; i++) {
+      free(map->val[i]);
+    }
+    free(map->val);
+    free(map);
+    return;
+  } else
+    return;
 }
-double get_map_value(Map *map, double x, double y);
+double get_map_value(Map *map, double x, double y) {
+  double value = -1000;
+  int row = (int)y;
+  int col = (int)x;
+  if (map != NULL) {
+    if (row >= 0 && row < map->height && col >= 0 && col < map->width)
+      value = map->val[row][col];
+    return value;
+  } else {
+    fprintf(stderr, "Nie można wczytać wartości ponieważ mapa jest pusta\n");
+    return -1;
+  }
+}
