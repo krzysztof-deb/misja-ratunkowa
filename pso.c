@@ -38,5 +38,11 @@ int init_swarm(Swarm *s, Map *m, double w, double c_1, double c_2, int count) {
     return -1;
   }
 }
-void free_swarm(Swarm *s);
+void free_swarm(Swarm *s) {
+  if (s != NULL) {
+    free(s->d);
+    return;
+  } else
+    return;
+}
 void update_swarm(Swarm *s, Map *m);
