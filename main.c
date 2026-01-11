@@ -80,4 +80,17 @@ int main(int argc, char *argv[]) {
     free_map(map);
     return 1;
   }
+
+  for (int i = 0; i < iterations; i++) {
+    update_swarm(s, map);
+    /*if(log_interval > 1){
+      log_swarm_to_csv();
+    }*/
+  }
+
+  free_swarm(s);
+  free(s);
+  free_map(map);
+  free(map);
+  return 0;
 }
