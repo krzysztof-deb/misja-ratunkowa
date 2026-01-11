@@ -2,6 +2,7 @@
 #include "pso.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <unistd.h>
 /* /pso <plik_mapy> -p <liczba_czastek> -i <liczba_iteracji> -c
 <plik_konfiguracyjny z parametrami_PSO> -n <co_ktora_iteracje_zapis_postepow> */
@@ -16,6 +17,7 @@ void print_usage(char *prog_name) {
   fprintf(stderr, " -n <int>      Częstotliwość zapisu danych(domyślnie 0)\n");
 }
 int main(int argc, char *argv[]) {
+  srand(time(NULL));
   int dron_count = 30;
   int iterations = 100;
   int log_interval = 0;
@@ -91,6 +93,5 @@ int main(int argc, char *argv[]) {
   free_swarm(s);
   free(s);
   free_map(map);
-  free(map);
   return 0;
 }
