@@ -90,6 +90,10 @@ int main(int argc, char *argv[]) {
     }*/
   }
 
+  printf("Symulacja zakończona!\n");
+  printf("Najlepsza znaleziona wartość sygnału %lf\n", s->gBest_val);
+  printf("Współrzędne źródła: X = %lf, Y = %lf\n", s->gBest_x, s->gBest_y);
+
   free_swarm(s);
   free(s);
   free_map(map);
