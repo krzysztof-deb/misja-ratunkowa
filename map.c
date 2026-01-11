@@ -59,5 +59,12 @@ Map *load_map(const char *filename) {
   }
   return m;
 }
-void free_map(Map *map);
+void free_map(Map *map) {
+  for (int i = 0; i < map->height; i++) {
+    free(map->val[i]);
+  }
+  free(map->val);
+  free(map);
+  return;
+}
 double get_map_value(Map *map, double x, double y);
