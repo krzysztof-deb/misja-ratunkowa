@@ -45,4 +45,32 @@ void free_swarm(Swarm *s) {
   } else
     return;
 }
-void update_swarm(Swarm *s, Map *m);
+void update_swarm(Swarm *s, Map *m) {
+  if (s == NULL || m == NULL)
+    return;
+  for (int i = 0; i < s->count; i++) {
+    double r_1 = (double)rand() / RAND_MAX;
+    double r_2 = (double)rand() / RAND_MAX;
+    double v_x = s->d[i].v_x;
+    s->d[i].v_x = v_x * s->w + s->c_1 * r_1 * (s->d[i].pBest_x - s->d[i].x) +
+                  s->c_2 * r_2 * (s->gBest_x - s->d[i].x);
+    s->d[i].x = s->d[i].x + s->d[i].v_x;
+    double v_y = s->d[i].v_y;
+    s->d[i].v_y = v_y * s->w + s->c_1 * r_1 * (s->d[i].pBest_y - s->d[i].y) +
+                  s->c_2 * r_2 * (s->gBest_y - s->d[i].y);
+    s->d[i].y = s->d[i].y + s->d[i].v_y;
+    double val = get_map_value(m, s->d[i].x, s->d[i].y);
+    s->d[i].val = val;
+    if (val > s->d[i].pBest_val) {
+      s->d[i].pBest_val = val;
+      s->d[i].pBest_x = s->d[i].x;
+      s->d[i].pBest_y = s->d[i].y;
+      if (val > s->gBest_val) {
+        s->gBest_val = val;
+        s->gBest_x = s->d[i].x;
+        s->gBest_y = s->d[i].y;
+      }
+    }
+  }
+  return;
+}
