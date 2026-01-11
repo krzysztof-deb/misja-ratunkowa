@@ -62,6 +62,22 @@ int main(int argc, char *argv[]) {
     FILE *conf = fopen(config_file, "r");
     if (conf != NULL) {
       fscanf(conf, "%lf %lf %*f %lf %*f", &w, &c_1, &c_2);
+      fclose(conf);
+    } else {
+      fprintf(stderr, "Błąd otwierania pliku konfiguracyjnego!\n");
     }
+  }
+
+  Swarm *s = malloc(sizeof(Swarm));
+  if (s != NULL) {
+    if (init_swarm(s, map, w, c_1, c_2, dron_count) == -1) {
+      fprintf(stderr, "Błąd przy alokacji pamięci dla inicjalizacji roju!\n");
+      free_map(map);
+      return 1;
+    }
+  } else {
+    fprintf(stderr, "Błąd przy alokacji pamięci dla roju!\n");
+    free_map(map);
+    return 1;
   }
 }
