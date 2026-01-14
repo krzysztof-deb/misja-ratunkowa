@@ -1,5 +1,6 @@
 #include "pso.h"
 #include "map.h"
+#include "utils.h"
 #include <iso646.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,8 +16,8 @@ int init_swarm(Swarm *s, Map *m, double w, double c_1, double c_2, int count) {
   s->d = (Dron *)malloc(sizeof(Dron) * count);
   if (s->d != NULL) {
     for (int i = 0; i < count; i++) {
-      double x = (double)rand() / RAND_MAX * m->width;
-      double y = (double)rand() / RAND_MAX * m->height;
+      double x = random_double(0, m->width);
+      double y = random_double(0, m->height);
       s->d[i].x = x;
       s->d[i].y = y;
       double val = get_map_value(m, x, y);
@@ -24,8 +25,8 @@ int init_swarm(Swarm *s, Map *m, double w, double c_1, double c_2, int count) {
       s->d[i].pBest_val = val;
       s->d[i].pBest_x = x;
       s->d[i].pBest_y = y;
-      s->d[i].v_x = (double)rand() / RAND_MAX * 2.0 - 1;
-      s->d[i].v_y = (double)rand() / RAND_MAX * 2.0 - 1;
+      s->d[i].v_x = random_double(-1.0, 1.0);
+      s->d[i].v_y = random_double(-1.0, 1.0);
       if (i == 0 || val > s->gBest_val) {
         s->gBest_val = val;
         s->gBest_x = x;
@@ -49,8 +50,8 @@ void update_swarm(Swarm *s, Map *m) {
   if (s == NULL || m == NULL)
     return;
   for (int i = 0; i < s->count; i++) {
-    double r_1 = (double)rand() / RAND_MAX;
-    double r_2 = (double)rand() / RAND_MAX;
+    double r_1 = random_double(0.0, 1.0);
+    double r_2 = random_double(0.0, 1.0);
     double v_x = s->d[i].v_x;
     s->d[i].v_x = v_x * s->w + s->c_1 * r_1 * (s->d[i].pBest_x - s->d[i].x) +
                   s->c_2 * r_2 * (s->gBest_x - s->d[i].x);

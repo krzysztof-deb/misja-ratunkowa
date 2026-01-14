@@ -8,7 +8,7 @@ Map *load_map(const char *filename) {
   Map *m = NULL;
 
   if (f != NULL) {
-    if (fscanf(f, "%d %d", &r, &c) != 2) {
+    if (fscanf(f, "%d %d", &c, &r) != 2) {
       fprintf(stderr, "Złe dane rozmiaru mapy w pliku %s\n", filename);
       fclose(f);
       return NULL;
@@ -77,9 +77,9 @@ double get_map_value(Map *map, double x, double y) {
   if (map != NULL) {
     if (row >= 0 && row < map->height && col >= 0 && col < map->width)
       value = map->val[row][col];
-    return value;
   } else {
     fprintf(stderr, "Nie można wczytać wartości ponieważ mapa jest pusta\n");
     return -1;
   }
+  return value;
 }

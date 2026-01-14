@@ -1,5 +1,7 @@
+#include "logger.h"
 #include "map.h"
 #include "pso.h"
+#include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -61,13 +63,7 @@ int main(int argc, char *argv[]) {
   double c_1 = 1;
   double c_2 = 1;
   if (config_file != NULL) {
-    FILE *conf = fopen(config_file, "r");
-    if (conf != NULL) {
-      fscanf(conf, "%lf %lf %*f %lf %*f", &w, &c_1, &c_2);
-      fclose(conf);
-    } else {
-      fprintf(stderr, "Błąd otwierania pliku konfiguracyjnego!\n");
-    }
+    load_config(config_file, &w, &c_1, &c_2);
   }
 
   Swarm *s = malloc(sizeof(Swarm));
@@ -83,16 +79,19 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
+  if (log_interval > 0)
+    init_log_file();
+
   for (int i = 0; i < iterations; i++) {
     update_swarm(s, map);
-    /*if(log_interval > 1){
-      log_swarm_to_csv();
-    }*/
+    if (log_interval > 0 && (i % log_interval == 0))
+      add_line_to_file(i, s->gBest_val);
   }
 
   printf("Symulacja zakończona!\n");
   printf("Najlepsza znaleziona wartość sygnału %lf\n", s->gBest_val);
-  printf("Współrzędne źródła: X = %lf, Y = %lf\n", s->gBest_x, s->gBest_y);
+  printf("Współrzędne źródła: X = %d, Y = %d\n", (int)s->gBest_x,
+         (int)s->gBest_y);
 
   free_swarm(s);
   free(s);
