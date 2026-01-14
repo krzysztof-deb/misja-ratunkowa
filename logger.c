@@ -4,11 +4,20 @@
 
 const char *file_name = "log.csv";
 
-void save_positions( Swarm *s, int iteration){
-  FILE *in=fopen(file_name,"a");
-  if(in==NULL)return;
-  for(int i=0;i<s->count;i++){
-    fprintf(in,"%d;%d;%lf;%lf\n",iteration,i,s->d[i].x,s->d[i].y);
+void init_log_file() {
+  FILE *f = fopen(file_name, "w");
+  if (f == NULL)
+    return;
+  fprintf(f, "Iteracja;ID_Drona;X;Y\n");
+  fclose(f);
+}
+
+void save_positions(Swarm *s, int iteration) {
+  FILE *in = fopen(file_name, "a");
+  if (in == NULL)
+    return;
+  for (int i = 0; i < s->count; i++) {
+    fprintf(in, "%d;%d;%lf;%lf\n", iteration, i, s->d[i].x, s->d[i].y);
   }
   fclose(in);
 }

@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < iterations; i++) {
     update_swarm(s, map);
     if (log_interval > 0 && (i % log_interval == 0))
-      add_line_to_file(i, s->gBest_val);
+      save_positions(s, i);
   }
 
   printf("Symulacja zakończona!\n");
