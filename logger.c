@@ -1,20 +1,14 @@
 #include "logger.h"
+#include "pso.h"
 #include <stdio.h>
 
 const char *file_name = "log.csv";
 
-void init_log_file() {
-  FILE *in = fopen(file_name, "w");
-  if (in == NULL)
-    return;
-  fprintf(in, "Iteracja, najlepszy wynik\n");
-  fclose(in);
-}
-
-void add_line_to_file(int iteration, double best) {
-  FILE *in = fopen(file_name, "a");
-  if (in == NULL)
-    return;
-  fprintf(in, "%d, %lf\n", iteration, best);
+void save_positions( Swarm *s, int iteration){
+  FILE *in=fopen(file_name,"a");
+  if(in==NULL)return;
+  for(int i=0;i<s->count;i++){
+    fprintf(in,"%d;%d;%lf;%lf\n",iteration,i,s->d[i].x,s->d[i].y);
+  }
   fclose(in);
 }
