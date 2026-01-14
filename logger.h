@@ -1,7 +1,7 @@
 #ifndef _LOGGER_H
 #define _LOGGER_H
+#include "pso.h"
 
-void init_log_file();
-void add_line_to_file(int iteration, double best);
+void save_positions(Swarm *s, int iteration);
 
 #endif
