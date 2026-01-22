@@ -1,7 +1,6 @@
 #include "pso.h"
 #include "map.h"
 #include "utils.h"
-#include <iso646.h>
 #include <stdio.h>
 #include <stdlib.h>
 
